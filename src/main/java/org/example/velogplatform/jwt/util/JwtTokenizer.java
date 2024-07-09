@@ -22,7 +22,7 @@ public class JwtTokenizer {
     public static Long ACCESS_TOKEN_EXPIRE_COUNT = 30 * 60 * 1000L; //30분
     public static Long REFRESH_TOKEN_EXPIRE_COUNT=7*24*60*60*1000L; //7일
 
-    public JwtTokenizer(@Value("${jwt.secret}")String accessSecret, @Value("${jwt.refresh}") String refreshSecret){
+    public JwtTokenizer(@Value("${spring.jwt.secret}")String accessSecret, @Value("${spring.jwt.refresh}") String refreshSecret){
         this.accessSecret = accessSecret.getBytes(StandardCharsets.UTF_8);
         this.refreshSecret = refreshSecret.getBytes(StandardCharsets.UTF_8);
     }

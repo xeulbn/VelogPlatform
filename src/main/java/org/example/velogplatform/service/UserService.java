@@ -28,9 +28,9 @@ public class UserService {
 
         Role userRole;
         if(name.equals("강슬빈")){
-            userRole=roleRepository.findByName("ROLE_ADMIN");
+            userRole=roleRepository.findByName("ADMIN");
         }else{
-            userRole=roleRepository.findByName("ROLE_USER");
+            userRole=roleRepository.findByName("USER");
         }
         user.setRoles(Collections.singleton(userRole));
         user.setPassword(passwordEncoder.encode(user.getPassword()));

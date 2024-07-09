@@ -71,7 +71,7 @@ public class UserController {
         cookie.setMaxAge(0); // 쿠키 삭제
 
         response.addCookie(cookie);
-        return "redirect:/api"; // 로그아웃 후 API 페이지로 리다이렉트
+        return "redirect:/"; // 로그아웃 후 API 페이지로 리다이렉트
     }
 
     @GetMapping("/loginform")
