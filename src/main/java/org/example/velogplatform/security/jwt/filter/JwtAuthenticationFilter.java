@@ -1,4 +1,4 @@
-package org.example.velogplatform.jwt.filter;
+package org.example.velogplatform.security.jwt.filter;
 
 
 import io.jsonwebtoken.Claims;
@@ -12,11 +12,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.example.velogplatform.jwt.exception.JwtExceptionCode;
-import org.example.velogplatform.jwt.token.JwtAuthenticationToken;
-import org.example.velogplatform.jwt.util.JwtTokenizer;
 import org.example.velogplatform.security.CustomUserDetails;
+import org.example.velogplatform.security.jwt.exception.JwtExceptionCode;
+import org.example.velogplatform.security.jwt.token.JwtAuthenticationToken;
+import org.example.velogplatform.security.jwt.util.JwtTokenizer;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,17 +24,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtTokenizer jwtTokenizer;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.info("필터인터널 실해애애앵");
+        log.info("request : {}", request.getRequestURI());
         String token = getToken(request); //accessToken 얻어냄.
         if(StringUtils.hasText(token)){
             try{
@@ -60,18 +66,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw new BadCredentialsException("JWT filter internal exception", e);
             }
         }
+        log.info("doFilter실행 차례");
         filterChain.doFilter(request, response);
     }
 
-    private void getAuthentication(String token){
+    private void getAuthentication(String token) {
         Claims claims = jwtTokenizer.parseAccessToken(token);
         String email = claims.getSubject();
         Long userId = claims.get("userId", Long.class);
-        String name = claims.get("name", String.class);
         String username = claims.get("username", String.class);
         List<GrantedAuthority> authorities = getGrantedAuthorities(claims);
 
-        CustomUserDetails userDetails = new CustomUserDetails(username,"",name,authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        CustomUserDetails userDetails = new CustomUserDetails(username,"",authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
 
         Authentication authentication = new JwtAuthenticationToken(authorities,userDetails,null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -86,7 +92,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return authorities;
     }
     private String getToken(HttpServletRequest request) {
+        log.info("request : {}", request.getRequestURI());
+
+        Enumeration eHeader = request.getHeaderNames();
+        while(eHeader.hasMoreElements()){
+            String request_Name= (String)eHeader.nextElement();
+            String request_Value= request.getHeader(request_Name);
+            log.info("request_Name : " + request_Name+" request_Value : " + request_Value);
+        }
+
+
         String authorization = request.getHeader("Authorization");
+        log.info("authorization : {}", authorization);
         if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer ")) {
             return authorization.substring(7);
         }

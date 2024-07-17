@@ -10,6 +10,7 @@ spring:
     password: root1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -19,5 +20,5 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
 
   jwt:
-    secret: a1204f3bb67184bddb76309bd575ddb88ecdb5cdb8a877e902b055b6150776ae
-    refresh: a1204f3bb67184bddb76309bd575ddb88ecdb5cdb8a877e902b055b6150776ae
+    secret: k32h7cOaxVR9BZC6n4GFm2ZPX6aYQ9v3
+    refresh: k32h7cOaxVR9BZC6n4GFm2ZPX6aYQ9v3

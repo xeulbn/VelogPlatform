@@ -1,4 +1,4 @@
-package org.example.velogplatform.jwt.exception;
+package org.example.velogplatform.security.jwt.exception;
 
 import lombok.Getter;
 

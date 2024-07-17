@@ -1,8 +1,9 @@
-package org.example.velogplatform.jwt.token;
+package org.example.velogplatform.security.jwt.token;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
+import javax.security.auth.Subject;
 import java.util.Collection;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
@@ -11,19 +12,18 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     private Object credentials;
 
     public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities,
-                                  Object principal, Object credentials) {
+                                  Object principal, Object credentials){
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
         this.setAuthenticated(true);
     }
 
-    public JwtAuthenticationToken(String token) {
+    public JwtAuthenticationToken(String token){
         super(null);
         this.token = token;
         this.setAuthenticated(false);
     }
-
     @Override
     public Object getCredentials() {
         return this.credentials;

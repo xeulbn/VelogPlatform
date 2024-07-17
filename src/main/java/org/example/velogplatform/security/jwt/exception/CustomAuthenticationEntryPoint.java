@@ -1,4 +1,4 @@
-package org.example.velogplatform.jwt.exception;
+package org.example.velogplatform.security.jwt.exception;
 
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,14 +20,14 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     //사용자가 인증되지 않았을때.. 어떻게 처리할지를 구현함.
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        String exceptin = (String) request.getAttribute("exception");
+        String exceptin = (String)request.getAttribute("exception");
 
         //어떤요청인지를 구분..
         //RESTful로 요청한건지..  그냥 페이지 요청한건지 구분해서 다르게 동작하도록 구현.
-        if (isRestRequest(request)) {
-            handleRestResponse(request, response, exceptin);
-        } else {
-            handlePageResponse(request, response, exceptin);
+        if(isRestRequest(request)){
+            handleRestResponse(request,response,exceptin);
+        }else{
+            handlePageResponse(request,response,exceptin);
         }
     }
 

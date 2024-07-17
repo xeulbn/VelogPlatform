@@ -1,4 +1,5 @@
-package org.example.velogplatform.jwt.util;
+package org.example.velogplatform.security.jwt.util;
+
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,24 +16,24 @@ import java.util.List;
 @Component
 @Slf4j
 public class JwtTokenizer {
-
     private final byte[] accessSecret;
     private final byte[] refreshSecret;
 
     public static Long ACCESS_TOKEN_EXPIRE_COUNT = 30 * 60 * 1000L; //30분
     public static Long REFRESH_TOKEN_EXPIRE_COUNT=7*24*60*60*1000L; //7일
 
-    public JwtTokenizer(@Value("${spring.jwt.secret}")String accessSecret, @Value("${spring.jwt.refresh}") String refreshSecret){
+    public JwtTokenizer(@Value("${spring.jwt.secret}") String accessSecret, @Value("${spring.jwt.refresh}") String refreshSecret){
         this.accessSecret = accessSecret.getBytes(StandardCharsets.UTF_8);
         this.refreshSecret = refreshSecret.getBytes(StandardCharsets.UTF_8);
     }
 
-    private String createToken(Long id, String email, String name, String username,
+    private String createToken(Long id, String email, String username,
                                List<String> roles, Long expire, byte[] secretKey){
-        Claims claims= Jwts.claims().setSubject(email);
 
-        claims.put("username", username);
-        claims.put("name",name);
+        Claims claims = Jwts.claims().setSubject(email);
+
+        //필요한 정보들을 저장한다.
+        claims.put("username",username);
         claims.put("userId",id);
         claims.put("roles", roles);
 
@@ -40,20 +41,21 @@ public class JwtTokenizer {
                 .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime()+expire))
-                .signWith(getSiginigKey(secretKey))
+                .signWith(getSigningKey(secretKey))
                 .compact();
+
     }
 
     //ACCESS Token 생성
-    public String createAccessToken(Long id, String email, String name, String username, List<String> roles){
-        return createToken(id,email,name,username,roles,ACCESS_TOKEN_EXPIRE_COUNT,accessSecret);
+    public String createAccessToken(Long id, String email, String username, List<String> roles){
+        return createToken(id,email,username,roles,ACCESS_TOKEN_EXPIRE_COUNT,accessSecret);
     }
     //Refresh Token생성
-    public String createRefreshToken(Long id, String email, String name, String username, List<String> roles){
-        return createToken(id,email,name,username,roles,REFRESH_TOKEN_EXPIRE_COUNT,refreshSecret);
+    public String createRefreshToken(Long id, String email, String username, List<String> roles){
+        return createToken(id,email,username,roles,REFRESH_TOKEN_EXPIRE_COUNT,refreshSecret);
     }
 
-    public static Key getSiginigKey(byte[] secretKey){
+    public static Key getSigningKey(byte[] secretKey){
         return Keys.hmacShaKeyFor(secretKey);
     }
 
@@ -64,10 +66,9 @@ public class JwtTokenizer {
         return Long.valueOf((Integer)claims.get("userId"));
     }
 
-    //accessToken
     public Claims parseToken(String token, byte[] secretKey){
         return Jwts.parserBuilder()
-                .setSigningKey(getSiginigKey(secretKey))
+                .setSigningKey(getSigningKey(secretKey))
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -81,6 +82,4 @@ public class JwtTokenizer {
     public Claims parseRefreshToken(String refreshToken) {
         return parseToken(refreshToken, refreshSecret);
     }
-
-
 }
