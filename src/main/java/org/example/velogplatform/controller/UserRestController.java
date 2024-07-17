@@ -1,10 +1,12 @@
 package org.example.velogplatform.controller;
 
 import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.example.velogplatform.dto.RefreshTokenDto;
 import org.example.velogplatform.dto.UserLoginDto;
 import org.example.velogplatform.dto.UserLoginResponseDto;
@@ -38,8 +40,8 @@ public class UserRestController {
 
 
     @PostMapping("/login")
-    public void loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
-                            Model model, HttpServletResponse response) throws IOException {
+    public ResponseEntity<UserLoginResponseDto> loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
+                              Model model, HttpServletResponse response) throws IOException {
 
         log.info("login시작");
 
@@ -78,7 +80,21 @@ public class UserRestController {
                 .name(user.getUsername())
                 .build();
 
-        response.sendRedirect("/");
+
+        Cookie accessTokenCookie = new Cookie("accessToken",accessToken);
+        accessTokenCookie.setHttpOnly(true);  //보안 (쿠키값을 자바스크립트같은곳에서는 접근할수 없어요.)
+        accessTokenCookie.setPath("/");
+        accessTokenCookie.setMaxAge(Math.toIntExact(JwtTokenizer.ACCESS_TOKEN_EXPIRE_COUNT/1000)); //30분 쿠키의 유지시간 단위는 초 ,  JWT의 시간단위는 밀리세컨드
+
+        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setMaxAge(Math.toIntExact(JwtTokenizer.REFRESH_TOKEN_EXPIRE_COUNT/1000)); //7일
+
+        response.addCookie(accessTokenCookie);
+        response.addCookie(refreshTokenCookie);
+
+        return new ResponseEntity(loginResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/logout")
