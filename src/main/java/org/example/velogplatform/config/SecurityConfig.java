@@ -38,9 +38,10 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/userregform","/userreg","/login","/refreshToken","/loginform").permitAll()
-
-                        .anyRequest().authenticated()
+//                        .requestMatchers("/userregform","/userreg","/login","/refreshToken","/loginform").permitAll()
+//
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenizer), UsernamePasswordAuthenticationFilter.class)
 //                .formLogin(Customizer.withDefaults())

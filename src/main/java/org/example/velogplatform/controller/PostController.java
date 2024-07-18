@@ -29,9 +29,15 @@ public class PostController {
         return ResponseEntity.ok(post);
     }
 
-    @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        Post createdPost = postService.createPost(post);
+    @GetMapping("/postform")
+    public String showPostForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "blog/postform";
+    }
+
+    @PostMapping("/{username}")
+    public ResponseEntity<Post> createPost(@PathVariable String username, @RequestBody Post post) {
+        Post createdPost = postService.createPost(post,username);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
     }
 
