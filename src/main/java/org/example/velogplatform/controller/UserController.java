@@ -45,6 +45,8 @@ public class UserController {
 
     @GetMapping("/")
     public String main(Model model){
+        List<Post> recentPosts = postService.getAllPosts();
+        model.addAttribute("posts", recentPosts);
         return "blog/main";
     }
 

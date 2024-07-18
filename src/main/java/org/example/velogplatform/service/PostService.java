@@ -20,6 +20,10 @@ public class PostService {
     @Autowired
     private UserRepository userRepository;
 
+//    public List<Post> getRecentPosts() {
+//        return postRepository.findTop5ByOrderByCreatedAtDesc();
+//    }
+
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
