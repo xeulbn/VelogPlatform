@@ -40,7 +40,7 @@ public class UserRestController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<UserLoginResponseDto> loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
+    public void loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
                               Model model, HttpServletResponse response) throws IOException {
 
         log.info("login시작");
@@ -94,7 +94,8 @@ public class UserRestController {
         response.addCookie(accessTokenCookie);
         response.addCookie(refreshTokenCookie);
 
-        return new ResponseEntity(loginResponse, HttpStatus.OK);
+
+        response.sendRedirect("/");
     }
 
     @DeleteMapping("/logout")

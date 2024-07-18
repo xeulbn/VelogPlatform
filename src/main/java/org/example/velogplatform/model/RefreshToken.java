@@ -15,4 +15,5 @@ public class RefreshToken {
     @Column(name = "user_id")
     private Long userId;
     private String value;
+    
 }

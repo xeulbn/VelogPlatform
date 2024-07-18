@@ -18,4 +18,6 @@ public class PostController {
         model.addAttribute("post", new Post());
         return "blog/postform";
     }
+
+
 }
