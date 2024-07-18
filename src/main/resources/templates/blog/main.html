@@ -3,8 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <title>MainPage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #24292e;
+            color: white;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+        }
+
+        .posts {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .post {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .post h2 {
+            margin-top: 0;
+        }
+
+        .post .read-more {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #24292e;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-<h1>MainPage</h1>
+<header>
+    <nav>
+        <a href="/" class="logo">XeulLog</a>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <section class="posts">
+        <!-- Posts will be dynamically loaded here -->
+        <article class="post">
+            <h2>Post Title</h2>
+            <p>Post content preview...</p>
+            <a href="#" class="read-more">Read more</a>
+        </article>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Xeulog. All rights reserved.</p>
+</footer>
 </body>
 </html>
