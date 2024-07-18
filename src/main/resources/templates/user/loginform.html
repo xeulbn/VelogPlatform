@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Xeulog Login</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
-
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fa;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,82 +15,84 @@
             margin: 0;
         }
 
-        .container {
-            text-align: center;
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
         }
 
-        h1 {
-            font-size: 24px;
+        .login-container h2 {
+            text-align: center;
+            color: #333;
             margin-bottom: 20px;
         }
 
-        form {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-            width: 320px;
-            margin: 0 auto;
-        }
-
-        label {
+        .login-container label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 700;
+            color: #333;
         }
 
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 16px;
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
         }
 
-        button {
+        .login-container button {
             width: 100%;
-            padding: 12px;
-            background-color: #12b886;
+            padding: 10px;
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 16px;
         }
 
-        button:hover {
-            background-color: #0fa576;
+        .login-container button:hover {
+            background-color: #0056b3;
         }
 
-        .register-link {
-            display: block;
+        .login-container .links {
+            text-align: center;
             margin-top: 20px;
-            font-size: 14px;
-            color: #12b886;
+        }
+
+        .login-container .links a {
+            display: block;
+            margin-bottom: 10px;
+            color: #007bff;
             text-decoration: none;
         }
 
-        .register-link:hover {
+        .login-container .links a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
-<h2>Xeulog Login</h2>
-<form action="/login" method="post">
-    <label for="username">아이디 : </label>
-    <input type="text" id="username" name="username" required><br><br>
+<div class="login-container">
+    <h2>Xeulog Login</h2>
+    <form action="/login" method="post">
+        <label for="username">아이디 : </label>
+        <input type="text" id="username" name="username" required>
 
-    <label for="password">비밀 번호 : </label>
-    <input type="text" id="password" name="password" required><br><br>
+        <label for="password">비밀 번호 : </label>
+        <input type="password" id="password" name="password" required>
 
-    <button type="submit">로그인</button>
-
-</form>
+        <button type="submit">로그인</button>
+    </form>
+    <div class="links">
+        <a href="/" class="logo">Xeul-log 메인페이지 이동</a>
+        <a href="/userregform">회원가입을 진행하시겠습니까?</a>
+    </div>
+</div>
 </body>
 </html>
-

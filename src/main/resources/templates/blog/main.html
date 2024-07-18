@@ -137,6 +137,10 @@
             <li><a href="/">Home</a></li>
             <li><a href="/posts/postform">Posts</a></li>
             <li><a href="#">About</a></li>
+            <li>
+                <a href="/logout" th:if="${username}" th:text="${username} + ' 로그아웃'" th:href="@{/logout}">로그아웃</a>
+                <a href="/loginform" th:if="${username == null}" th:text="'로그인'" th:href="@{/login}">로그인</a>
+            </li>
         </ul>
     </nav>
 </header>
