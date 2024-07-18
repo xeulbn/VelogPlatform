@@ -5,43 +5,142 @@
     <title>Main Page</title>
     <link rel="stylesheet" href="/static/css/styles.css">
     <style>
+        body, h1, h2, h3, p, ul, li, img {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            border: none;
+        }
+
+        /* Body styling */
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f9fa;
-            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
         }
-        .container {
+
+        /* Header and navigation styling */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
-        h1 {
-            text-align: center;
+
+        nav .logo {
+            font-size: 1.5em;
+            font-weight: bold;
             color: #333;
+            text-decoration: none;
         }
+
+        nav ul {
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #eee;
+        }
+
+        /* Main content styling */
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Post styling */
         .post {
-            background-color: white;
             margin-bottom: 20px;
             padding: 20px;
+            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .post h2 {
-            margin-top: 0;
+            font-size: 1.8em;
             color: #333;
+            margin-bottom: 10px;
         }
+
         .post p {
+            margin-bottom: 10px;
             color: #555;
         }
+
         .post img {
             max-width: 100%;
             height: auto;
             border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .post .author {
+            font-weight: bold;
+        }
+
+        .post .tags {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #fff;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+
+        footer p {
+            font-size: 0.9em;
+            color: #888;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Main</h1>
+<header>
+    <nav>
+        <a href="/" class="logo">Xeul-log</a>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/posts/postform">Posts</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
     <div th:each="post : ${posts}" class="post">
         <h2 th:text="${post.title}"></h2>
         <p th:text="${post.tags}"></p>
@@ -53,6 +152,9 @@
         <p th:if="${post.published}">Published</p>
         <p th:if="${!post.published}">Not Published</p>
     </div>
-</div>
+</main>
+<footer>
+    <p>&copy; 2024 Xeul-log. All rights reserved.</p>
+</footer>
 </body>
 </html>
