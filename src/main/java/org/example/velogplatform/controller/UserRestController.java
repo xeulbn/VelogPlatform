@@ -93,6 +93,7 @@ public class UserRestController {
 
         response.addCookie(accessTokenCookie);
         response.addCookie(refreshTokenCookie);
+        log.info("Cokkie에까지 저장 완료 : {} ", loginResponse);
 
 
         response.sendRedirect("/");

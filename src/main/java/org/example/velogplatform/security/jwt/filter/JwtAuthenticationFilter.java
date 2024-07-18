@@ -42,6 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.info("필터인터널 실해애애앵");
         log.info("request : {}", request.getRequestURI());
         String token = getToken(request); //accessToken 얻어냄.
+        log.info("token 뭘긴데 : {}", token);
         if(StringUtils.hasText(token)){
             try{
                 getAuthentication(token);
@@ -72,6 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private void getAuthentication(String token) {
         Claims claims = jwtTokenizer.parseAccessToken(token);
+        log.info("claims 뭔뎅 : {}",claims);
         String email = claims.getSubject();
         Long userId = claims.get("userId", Long.class);
         String username = claims.get("username", String.class);
@@ -80,6 +82,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         CustomUserDetails userDetails = new CustomUserDetails(username,"",authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
 
         Authentication authentication = new JwtAuthenticationToken(authorities,userDetails,null);
+        log.info("authentication {} ",authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
@@ -89,10 +92,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         for (String role : roles){
             authorities.add(()->role);
         }
+        log.info("authorities 나온다라라라 : {}", authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(", "))); //admin이 잘나온다.
         return authorities;
     }
     private String getToken(HttpServletRequest request) {
         log.info("request : {}", request.getRequestURI());
+
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            log.info("Header: {}", headerName);
+        }
+
 
         String authorization = request.getHeader("Authorization");
         log.info("authorization : {}", authorization);

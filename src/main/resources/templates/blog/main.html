@@ -2,113 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MainPage</title>
+    <title>Main Page</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f7f9fa;
+            padding: 20px;
         }
-
-        header {
-            background-color: #24292e;
-            color: white;
-            padding: 1rem 0;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1000px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
-
-        nav .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-            color: white;
+        h1 {
+            text-align: center;
+            color: #333;
         }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav ul li {
-            margin-left: 20px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-        }
-
-        main {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-        }
-
-        .posts {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
         .post {
+            background-color: white;
+            margin-bottom: 20px;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
         .post h2 {
             margin-top: 0;
+            color: #333;
         }
-
-        .post .read-more {
-            text-decoration: none;
-            color: #007bff;
+        .post p {
+            color: #555;
         }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #24292e;
-            color: white;
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-<header>
-    <nav>
-        <a href="/" class="logo">XeulLog</a>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Posts</a></li>
-            <li><a href="#">About</a></li>
-        </ul>
-    </nav>
-</header>
-<main>
-    <section class="posts">
-        <!-- Posts will be dynamically loaded here -->
-        <article class="post">
-            <h2>Post Title</h2>
-            <p>Post content preview...</p>
-            <a href="#" class="read-more">Read more</a>
-        </article>
-    </section>
-</main>
-<footer>
-    <p>&copy; 2024 Xeulog. All rights reserved.</p>
-</footer>
+<div class="container">
+    <h1>Recent Posts</h1>
+    <div th:each="post : ${posts}" class="post">
+        <h2 th:text="${post.title}"></h2>
+        <p th:text="${post.tags}"></p>
+        <div th:if="${post.imageUrl}">
+            <img th:src="${post.imageUrl}" alt="Post Image">
+        </div>
+        <p th:text="${post.content}"></p>
+        <p>By <span th:text="${post.author.username}"></span></p>
+        <p th:if="${post.published}">Published</p>
+        <p th:if="${!post.published}">Not Published</p>
+    </div>
+</div>
 </body>
 </html>

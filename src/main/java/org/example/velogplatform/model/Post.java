@@ -18,10 +18,15 @@ public class Post {
     private String title;
     private String tags;
     private String content;
+    @Column(name="image_url")
     private String imageUrl;
     private String author;
     private boolean published;
+
+    @Column(name="create_at")
     private LocalDateTime createdAt=LocalDateTime.now();
+
+    @Column(name="update_at")
     private LocalDateTime updatedAt;
 
 }

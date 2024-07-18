@@ -9,10 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.velogplatform.dto.RefreshTokenDto;
 import org.example.velogplatform.dto.UserLoginDto;
 import org.example.velogplatform.dto.UserLoginResponseDto;
+import org.example.velogplatform.model.Post;
 import org.example.velogplatform.model.RefreshToken;
 import org.example.velogplatform.model.Role;
 import org.example.velogplatform.model.User;
 import org.example.velogplatform.security.jwt.util.JwtTokenizer;
+import org.example.velogplatform.service.PostService;
 import org.example.velogplatform.service.RefreshTokenService;
 import org.example.velogplatform.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -35,13 +37,14 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
+    private final PostService postService;
 
     private final PasswordEncoder passwordEncoder;
     private final RefreshTokenService refreshTokenService;
     private final JwtTokenizer jwtTokenizer;
 
     @GetMapping("/")
-    public String main(){
+    public String main(Model model){
         return "blog/main";
     }
 
@@ -83,6 +86,7 @@ public class UserController {
         log.info("로그인 한다구룡렁러ㅏ널아러ㅏ널ㄴ");
         return "user/loginform";
     }
+
 
 
 
