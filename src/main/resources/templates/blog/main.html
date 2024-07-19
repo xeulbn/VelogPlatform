@@ -137,8 +137,8 @@
             <li><a href="/">Home</a></li>
             <li><a href="/posts/postform">Write Posts</a></li>
             <li>
-                <a th:if="${#authentication?.principal?.username}" th:href="@{'/posts/' + ${#authentication.principal.username}}" th:text="'MyPage'"></a>
-                <a th:if="${#authentication?.principal == null}" th:href="@{posts/about}" th:text="'About'"></a>
+                <a th:if="${username != null}" th:href="@{/posts/{username}(username=${username})}" th:text="'MyPage'"></a>
+                <a th:if="${username == null}" th:href="@{/about}" th:text="'About'"></a>
             </li>
             <li>
                 <a href="/logout" th:if="${username}" th:text="${username} + ' 로그아웃'" th:href="@{/logout}">로그아웃</a>
