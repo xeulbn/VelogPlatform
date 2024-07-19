@@ -41,5 +41,16 @@ public class PostController {
         return "blog/mypage";
     }
 
+    @DeleteMapping("/{id}")
+    public String deletePost(@PathVariable Long id) {
+        postService.deletePostById(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/about")
+    public String about(){
+        return "blog/about";
+    }
+
 
 }

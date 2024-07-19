@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Main Page</title>
+    <title>About</title>
     <link rel="stylesheet" href="/static/css/styles.css">
     <style>
         body, h1, h2, h3, p, ul, li, img {
@@ -70,48 +70,36 @@
 
         /* Main content styling */
         main {
-            max-width: 1200px;
-            margin: 20px auto;
+            max-width: 800px;
+            margin: 40px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Post styling */
-        .post {
+        /* About content styling */
+        .about-section {
+            text-align: center;
+        }
+
+        .about-section h1 {
+            font-size: 2.5em;
             margin-bottom: 20px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .post h2 {
-            font-size: 1.8em;
             color: #333;
-            margin-bottom: 10px;
         }
 
-        .post p {
-            margin-bottom: 10px;
+        .about-section p {
+            font-size: 1.1em;
             color: #555;
+            margin-bottom: 20px;
         }
 
-        .post img {
+        .about-section img {
             max-width: 100%;
             height: auto;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-
-        .post .author {
-            font-weight: bold;
-        }
-
-        .post .tags {
-            font-size: 0.9em;
-            color: #888;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
 
         /* Footer styling */
@@ -120,7 +108,7 @@
             text-align: center;
             padding: 20px;
             border-top: 1px solid #eee;
-            margin-top: 20px;
+            margin-top: 40px;
         }
 
         footer p {
@@ -138,26 +126,22 @@
             <li><a href="/posts/postform">Write Posts</a></li>
             <li>
                 <a th:if="${#authentication?.principal?.username}" th:href="@{'/posts/' + ${#authentication.principal.username}}" th:text="'MyPage'"></a>
-                <a th:if="${#authentication?.principal == null}" th:href="@{posts/about}" th:text="'About'"></a>
+                <a th:if="${#authentication?.principal == null}" th:href="@{/about}" th:text="'About'"></a>
             </li>
             <li>
-                <a href="/logout" th:if="${username}" th:text="${username} + ' 로그아웃'" th:href="@{/logout}">로그아웃</a>
-                <a href="/loginform" th:if="${username == null}" th:text="'로그인'" th:href="@{/loginform}">로그인</a>
+                <a th:if="${#authentication?.principal}" th:href="@{/logout}" th:text="${#authentication.principal.username} + ' 로그아웃'">로그아웃</a>
+                <a th:if="${#authentication?.principal == null}" th:href="@{/loginform}" th:text="'로그인'">로그인</a>
             </li>
         </ul>
     </nav>
 </header>
 <main>
-    <div th:each="post : ${posts}" class="post">
-        <h2 th:text="${post.title}"></h2>
-        <p th:text="${post.tags}"></p>
-        <div th:if="${post.imageUrl}">
-            <img th:src="${post.imageUrl}" alt="Post Image">
-        </div>
-        <p th:text="${post.content}"></p>
-        <p>By <span th:text="${post.author}"></span></p>
-        <p th:if="${post.published}">Published</p>
-        <p th:if="${!post.published}">Not Published</p>
+    <div class="about-section">
+        <h1>About Xeul-log</h1>
+        <p>Welcome to Xeul-log, your go-to platform for sharing and discovering new blog posts.</p>
+        <img src="AboutPage.jpg" alt="About Image">
+        <p>At Xeul-log, we believe in the power of community and the importance of sharing knowledge. Whether you're a seasoned writer or just starting out, our platform provides the tools you need to publish and share your ideas with the world.</p>
+        <p>Join us today and start your blogging journey with Xeul-log!</p>
     </div>
 </main>
 <footer>

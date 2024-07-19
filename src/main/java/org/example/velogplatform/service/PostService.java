@@ -39,4 +39,8 @@ public class PostService {
     public List<Post> getPostsByAuthor(String author) {
         return postRepository.findByAuthorOrderByCreatedAtDesc(author);
     }
+
+    public void deletePostById(Long id) {
+        postRepository.deleteById(id);
+    }
 }
