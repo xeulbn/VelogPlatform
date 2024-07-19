@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +33,12 @@ public class PostController {
         String username = authentication.getName();
         postService.createPost(post, username);
         return "redirect:/";
+    }
+
+    @GetMapping("/{username}")
+    public String getPostsByUser(@PathVariable String username, Model model) {
+        model.addAttribute("posts", postService.getPostsByAuthor(username));
+        return "blog/mypage";
     }
 
 

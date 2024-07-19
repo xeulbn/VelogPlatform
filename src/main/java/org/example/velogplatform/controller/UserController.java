@@ -47,9 +47,14 @@ public class UserController {
 
     @GetMapping("/")
     public String main(Model model, @AuthenticationPrincipal UserDetails userDetails){
+
         List<Post> recentPosts = postService.getAllPosts();
         model.addAttribute("posts", recentPosts);
-        model.addAttribute("username", userDetails.getUsername());
+        if (userDetails != null && userDetails.getUsername() != null) {
+            model.addAttribute("username", userDetails.getUsername());
+        } else {
+            model.addAttribute("username", null);
+        }
         return "blog/main";
     }
 

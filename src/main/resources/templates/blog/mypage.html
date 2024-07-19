@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .post {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .post h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .post p {
+            color: #555;
+        }
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>My Posts</h1>
+    <div th:each="post : ${posts}" class="post">
+        <h2 th:text="${post.title}"></h2>
+        <p th:text="${post.tags}"></p>
+        <div th:if="${post.imageUrl}">
+            <img th:src="${post.imageUrl}" alt="Post Image">
+        </div>
+        <p th:text="${post.content}"></p>
+        <p>By <span th:text="${post.author}"></span></p>
+        <p th:if="${post.published}">Published</p>
+        <p th:if="${!post.published}">Not Published</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package org.example.velogplatform.service;
 
+import org.example.velogplatform.dto.UserPostResponse;
 import org.example.velogplatform.model.Post;
 import org.example.velogplatform.model.User;
 import org.example.velogplatform.repository.PostRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -32,5 +34,9 @@ public class PostService {
         User user = userRepository.findByUsername(username);
         post.setAuthor(user.getUsername());
         return postRepository.save(post);
+    }
+
+    public List<Post> getPostsByAuthor(String author) {
+        return postRepository.findByAuthorOrderByCreatedAtDesc(author);
     }
 }
